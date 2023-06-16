@@ -1,44 +1,56 @@
 ---
-title: Getting started
+sidebar_position: 1
+title: Home
+description: Codex is building a Decentralized Durability Storage Engine
 ---
-## Description
 
-This repository contains the content of your documentation website.
+## Codex
 
-## How to Run Locally
+Codex is building a Decentralized Durability Storage Engine
 
-1. Clone this repository.
-2. Install the dependencies:
-```bash
-$ yarn
-```
-3. Start and open the website in your browser:
-```bash
-$ yarn start
-```
+[PoC Dagger](https://github.com/status-im/nim-codex)
 
-## Configuration
-Edit the `docusaurus.config.js` file in the repository's root directory, and update the value of the `businessUnit` field in presets section; below is a list of valid values:
-- Logos
-- Codex
-- Waku
+<br />
 
-Example:
-```js
-presets: [
-  [
-    '@acid-info/logos-docusaurus-preset',
-    {
-      businessUnit: 'Codex',
-    },
-  ],
-],
-```
+## What is Codex?
+<Quote>
+    <ul>
+        <li>Codex is aiming to solve the fundamental issues of data durability in decentralized systems.</li>
+        <li>Codex is a research group working in all areas of decentralized storage.</li>
+        <li>Codex is a decentralized storage protocol for durable information.</li>
+    </ul>
+</Quote>
 
-This is probably enough in most cases, as the Logos plugins will fill in other configurations related to the specified business unit. If you find any error in the information coming from Logos Plugins, please head over to [Logos Docusaurus Plugins](https://github.com/acid-info/logos-docusaurus-plugins) and create an issue.
+<br />
 
-## Customization
+## Features
 
-You can find the instructions on adding more documentation sections, localization, and versioning on the [Docusaurus](https://docusaurus.io/docs) website.
+### Fast erasure coding
 
-> Note that theme customization is limited; for further instructions on customizing your theme, head over to [Logos Docusaurus Theme](https://github.com/acid-info/logos-docusaurus-plugins/tree/main/packages/logos-docusaurus-theme/). 
+Codex uses high-performance Reed-Solomon encoding to guarantee the durability of the datasets.
+
+### SNARK-based proof of retrievability
+
+To implement space-efficient data retrievability, Codex leverages state-of-the-art SNARK-based proofs.
+
+### Low-overhead lazy repair
+
+Data repairs in Codex are grouped through lazy repair to decrease network bandwidth overhead.
+
+### Data Availability Sampling
+
+Codex samples datasets frequently to guarantee data durability in a Byzantine environment.
+
+<br />
+
+## Resources
+
+- Read our white-paper to know more about Codex.
+    - [Whitepaper](https://codex.storage/docs/codex-whitepaper.pdf)
+
+- Play with the first version of Codex.
+    - [Nim Codex](https://github.com/status-im/nim-codex)  
+
+- Checkout our research models and track our progress.
+    - [Codex Research](https://github.com/status-im/codex-research)
+
