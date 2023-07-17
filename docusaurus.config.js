@@ -44,6 +44,7 @@ const config = {
         docs: {
           routeBasePath: '/',
         },
+        og: {},
       }),
     ],
   ],
