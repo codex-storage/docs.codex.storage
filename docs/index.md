@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-description: Codex is building a Decentralized Durability Storage Engine
+description: Codex is building a decentralised durability storage engine
 ---
-# How to use Codex
+# How to Use Codex
 
-> The Codex project aims to create a decentralized durability engine that allows persisting data in p2p networks. In other words, it allows storing files and data with predictable durability guarantees for later retrieval.
+> The Codex project aims to create a decentralised durability engine that allows persisting data in p2p networks. In other words, it allows storing files and data with predictable durability guarantees for later retrieval.
 
 > WARNING: This project is under active development and is considered pre-alpha.
 
@@ -15,11 +15,11 @@ description: Codex is building a Decentralized Durability Storage Engine
 [![Codecov](https://codecov.io/gh/status-im/nim-codex/branch/main/graph/badge.svg?token=XFmCyPSNzW)](https://codecov.io/gh/status-im/nim-codex)
 [![Discord](https://img.shields.io/discord/895609329053474826)](https://discord.gg/CaJTh24ddQ)
 
-## Build and Run
+## Build and run
 
 For detailed instructions on preparing to build nim-codex see [*Building Codex*](BUILDING.md).
 
-To build the project, clone it and run:
+To build the project, clone it, and run:
 
 ```bash
 make update && make exec
@@ -33,7 +33,7 @@ Run the client with:
 build/codex
 ```
 
-### CLI Options
+### CLI options
 
 ```
 build/codex --help
@@ -67,13 +67,13 @@ Available sub-commands:
 codex initNode
 ```
 
-### Example: running two Codex clients
+### Example: Running two Codex clients
 
 ```bash
 build/codex --data-dir="$(pwd)/Codex1" -i=127.0.0.1
 ```
 
-This will start codex with a data directory pointing to `Codex1` under the current execution directory and announce itself on the DHT under `127.0.0.1`.
+This will start Codex with a data directory pointing to `Codex1` under the current execution directory and announce itself on the DHT under `127.0.0.1`.
 
 To run a second client that automatically discovers nodes on the network, we need to get the Signed Peer Record (SPR) of first client, Client1. We can do this by querying the `/info` endpoint of the node's REST API.
 
@@ -137,7 +137,7 @@ curl -vvv -H "content-type: application/octet-stream" -H Expect: -T "<path to fi
 
 ### `/api/codex/v1/info`
 
-Get useful node info such as its peer id, address and SPR.
+Get useful node info such as its peer id, address, and SPR.
 
 Example:
 
