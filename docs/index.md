@@ -2,7 +2,7 @@
 sidebar_position: 1
 description: Codex is building a decentralised durability storage engine
 ---
-# How to Use Codex
+# Guides
 
 > The Codex project aims to create a decentralised durability engine that allows persisting data in p2p networks. In other words, it allows storing files and data with predictable durability guarantees for later retrieval.
 

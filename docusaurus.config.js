@@ -42,6 +42,7 @@ const config = {
           },
         },
         docs: {
+          breadcrumbs: false,
           routeBasePath: '/',
         },
         og: {},
@@ -55,6 +56,14 @@ const config = {
       navbar: {
         hideOnScroll: true,
         items: [
+          {
+            to: '/',
+            label: 'Guides',
+          },
+          {
+            href: 'https://discord.gg/2NXGrsqmDq',
+            label: 'Discord',
+          },
           {
             type: 'search',
           },
