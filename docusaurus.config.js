@@ -67,6 +67,12 @@ const config = {
           {
             type: 'search',
           },
+          {
+            href: 'https://github.com/codex-storage',
+            position: 'right',
+            className: 'header-github-link',
+            title: 'Waku GitHub repository',
+          },
         ],
       },
       footer: {
