@@ -5,9 +5,10 @@ description: Codex is building a decentralised durability storage engine
 
 import { Badge } from '../src/components/Badge'
 
+
 # Guides
 
-> The Codex project aims to create a decentralised durability engine that allows persisting data in p2p networks. In other words, it allows storing files and data with predictable durability guarantees for later retrieval.
+> The Codex project aims to create a decentralized durability engine that allows persisting data in p2p networks. In other words, it allows storing files and data with predictable durability guarantees for later retrieval.
 
 > WARNING: This project is under active development and is considered pre-alpha.
 
@@ -17,29 +18,29 @@ import { Badge } from '../src/components/Badge'
 
 <Badge className="badge-margin" href="https://img.shields.io/badge/stability-experimental-orange.svg" imgSrc="https://img.shields.io/badge/stability-experimental-orange.svg" imgAlt="Stability: experimental"/>
 
-<Badge className="badge-margin" href="https://github.com/status-im/nim-codex/actions?query=workflow%3ACI+branch%3Amain" imgSrc="https://github.com/status-im/nim-codex/actions/workflows/ci.yml/badge.svg?branch=main" imgAlt="CI"/>
+<Badge className="badge-margin" href="https://github.com/codex-storage/nim-codex/actions/workflows/ci.yml?query=branch%3Amaster" imgSrc="https://github.com/codex-storage/nim-codex/actions/workflows/ci.yml/badge.svg?branch=master" imgAlt="CI"/>
 
-<Badge className="badge-margin" href="https://codecov.io/gh/status-im/nim-codex" imgSrc="https://codecov.io/gh/status-im/nim-codex/branch/main/graph/badge.svg?token=XFmCyPSNzW" imgAlt="Codecov"/>
+<Badge className="badge-margin" href="https://codecov.io/gh/codex-storage/nim-codex" imgSrc="https://codecov.io/gh/codex-storage/nim-codex/branch/master/graph/badge.svg?token=XFmCyPSNzW" imgAlt="Codecov"/>
 
-<Badge className="badge-margin" href="https://discord.gg/CaJTh24ddQ" imgSrc="https://img.shields.io/discord/895609329053474826" imgAlt="Discord" />
+<Badge className="badge-margin" href="https://discord.gg/codex-storage" imgSrc="https://img.shields.io/discord/895609329053474826" imgAlt="Discord" />
+
 
 ## Build and run
 
 For detailed instructions on preparing to build nim-codex see [*Building Codex*](https://github.com/codex-storage/nim-codex/blob/master/BUILDING.md).
 
-To build the project, clone it, and run:
-
+To build the project, clone it and run:
 ```bash
-build/codex
+make update && make
 ```
 
 The executable will be placed under the `build` directory under the project root.
 
 Run the client with:
-
 ```bash
 build/codex
 ```
+
 
 ### CLI options
 
@@ -51,105 +52,91 @@ codex [OPTIONS]... command
 
 The following options are available:
 
-     --log-level            Sets the log level [=LogLevel.INFO].
+     --config-file          Loads the configuration from a TOML file [=none].
+     --log-level            Sets the log level [=info].
      --metrics              Enable the metrics server [=false].
      --metrics-address      Listening address of the metrics server [=127.0.0.1].
      --metrics-port         Listening HTTP port of the metrics server [=8008].
  -d, --data-dir             The directory where codex will store configuration and data..
- -l, --listen-port          Specifies one or more listening ports for the node to listen on. [=0].
- -i, --listen-ip            The public IP [=0.0.0.0].
-     --udp-port             Specify the discovery (UDP) port [=8090].
-     --net-privkey          Source of network (secp256k1) private key file (random|<path>) [=random].
+ -i, --listen-addrs         Multi Addresses to listen on [=/ip4/0.0.0.0/tcp/0].
+ -a, --nat                  IP Addresses to announce behind a NAT [=127.0.0.1].
+ -e, --disc-ip              Discovery listen address [=0.0.0.0].
+ -u, --disc-port            Discovery (UDP) port [=8090].
+     --net-privkey          Source of network (secp256k1) private key file path or name [=key].
  -b, --bootstrap-node       Specifies one or more bootstrap nodes to use when connecting to the network..
      --max-peers            The maximum number of peers to connect to [=160].
      --agent-string         Node agent string which is used as identifier in network [=Codex].
+     --api-bindaddr         The REST API bind address [=127.0.0.1].
  -p, --api-port             The REST Api port [=8080].
- -c, --cache-size           The size in MiB of the block cache, 0 disables the cache [=100].
+     --repo-kind            backend for main repo store (fs, sqlite) [=fs].
+ -q, --storage-quota        The size of the total storage quota dedicated to the node [=8589934592].
+ -t, --block-ttl            Default block timeout in seconds - 0 disables the ttl [=$DefaultBlockTtl].
+     --block-mi             Time interval in seconds - determines frequency of block maintenance cycle: how
+                            often blocks are checked for expiration and cleanup.
+                            [=$DefaultBlockMaintenanceInterval].
+     --block-mn             Number of blocks to check every maintenance cycle. [=1000].
+ -c, --cache-size           The size in MiB of the block cache, 0 disables the cache - might help on slow
+                            hardrives [=0].
      --persistence          Enables persistence mechanism, requires an Ethereum node [=false].
      --eth-provider         The URL of the JSON-RPC API of the Ethereum node [=ws://localhost:8545].
      --eth-account          The Ethereum account that is used for storage contracts [=EthAddress.none].
      --eth-deployment       The json file describing the contract deployment [=string.none].
+     --validator            Enables validator, requires an Ethereum node [=false].
+     --validator-max-slots  Maximum number of slots that the validator monitors [=1000].
 
 Available sub-commands:
 
 codex initNode
 ```
 
+
 ### Example: Running two Codex clients
 
-```bash
-build/codex --data-dir="$(pwd)/Codex1" -i=127.0.0.1
-```
+ For more information please see [Codex Two-Client Test](https://github.com/codex-storage/nim-codex/blob/master/docs/TWOCLIENTTEST.md).
 
-This will start Codex with a data directory pointing to `Codex1` under the current execution directory and announce itself on the DHT under `127.0.0.1`.
 
-To run a second client that automatically discovers nodes on the network, we need to get the Signed Peer Record (SPR) of first client, Client1. We can do this by querying the `/info` endpoint of the node's REST API.
+### Interacting with the client
 
-`curl http://127.0.0.1:8080/api/codex/v1/info`
+ The client exposes a REST API that can be used to interact with the clients. These commands could be invoked with any HTTP client, however the following endpoints assume the use of the `curl` command.
 
-This should output information about Client1, including its PeerID, TCP/UDP addresses, data directory, and SPR:
+ For more information about API endpoints please see [api.codex.storage](https://api.codex.storage/).
 
-```json
-{
-  "id": "16Uiu2HAm92LGXYTuhtLaZzkFnsCx6FFJsNmswK6o9oPXFbSKHQEa",
-  "addrs": [
-    "/ip4/0.0.0.0/udp/8090",
-    "/ip4/0.0.0.0/tcp/49336"
-  ],
-  "repo": "/repos/status-im/nim-codex/Codex1",
-  "spr": "spr:CiUIAhIhAmqg5fVU2yxPStLdUOWgwrkWZMHW2MHf6i6l8IjA4tssEgIDARpICicAJQgCEiECaqDl9VTbLE9K0t1Q5aDCuRZkwdbYwd_qLqXwiMDi2ywQ5v2VlAYaCwoJBH8AAAGRAh-aGgoKCAR_AAABBts3KkcwRQIhAPOKl38CviplVbMVnA_9q3N1K_nk5oGuNp7DWeOqiJzzAiATQ2acPyQvPxLU9YS-TiVo4RUXndRcwMFMX2Yjhw8k3A"
-}
-```
 
-Now, let's start a second client, Client2. Because we're already using the default ports TCP (:8080) and UDP (:8090) for the first client, we have to specify new ports to avoid a collision. Additionally, we can specify the SPR from Client1 as the bootstrap node for discovery purposes, allowing Client2 to determine where content is located in the network.
-
-```bash
-build/codex --data-dir="$(pwd)/Codex2" -i=127.0.0.1 --api-port=8081 --udp-port=8091 --bootstrap-node=spr:CiUIAhIhAmqg5fVU2yxPStLdUOWgwrkWZMHW2MHf6i6l8IjA4tssEgIDARpICicAJQgCEiECaqDl9VTbLE9K0t1Q5aDCuRZkwdbYwd_qLqXwiMDi2ywQ5v2VlAYaCwoJBH8AAAGRAh-aGgoKCAR_AAABBts3KkcwRQIhAPOKl38CviplVbMVnA_9q3N1K_nk5oGuNp7DWeOqiJzzAiATQ2acPyQvPxLU9YS-TiVo4RUXndRcwMFMX2Yjhw8k3A
-```
-
-There are now two clients running. We could upload a file to Client1 and download that file (given its CID) using Client2, by using the clients' REST API.
-
-## Interacting with the client
-
-The client exposes a REST API that can be used to interact with the clients. These commands could be invoked with any HTTP client, however the following endpoints assume the use of the `curl` command.
-
-### `/api/codex/v1/connect/{peerId}`
+#### `/api/codex/v1/connect/{peerId}`
 
 Connect to a peer identified by its peer id. Takes an optional `addrs` parameter with a list of valid [multiaddresses](https://multiformats.io/multiaddr/). If `addrs` is absent, the peer will be discovered over the DHT.
 
 Example:
-
 ```bash
-curl "127.0.0.1:8080/api/codex/v1/connect/<peer id>?addrs=<multiaddress>"
+curl "127.0.0.1:8080/api/codex/v1/connect/<PEER ID HERE>?addrs=/ip4/127.0.0.1/tcp/8071"
 ```
 
-### `/api/codex/v1/download/{id}`
 
-Download data identified by a `Cid`.
-
-Example:
-
-```bash
- curl -vvv "127.0.0.1:8080/api/codex/v1/download/<Cid of the content>" --output <name of output file>
- ```
-
-### `/api/codex/v1/upload`
-
-Upload a file, upon success returns the `Cid` of the uploaded file.
+#### `/api/codex/v1/data/{id}/network`
+Download data identified by a `CID`.
 
 Example:
-
 ```bash
-curl -vvv -H "content-type: application/octet-stream" -H Expect: -T "<path to file>" "127.0.0.1:8080/api/codex/v1/upload" -X POST
+curl 127.0.0.1:8080/api/codex/v1/data/<CID>/network -o <OUTPUT FILE>
 ```
 
-### `/api/codex/v1/info`
+
+#### `/api/codex/v1/data`
+
+Upload a file, upon success returns the `CID` of the uploaded file.
+
+Example:
+```bash
+curl -X POST 127.0.0.1:8080/api/codex/v1/data -H "content-type: application/octet-stream" -H "Expect: 100-continue" -T "<FILE PATH>"
+
+```
+
+
+#### `/api/codex/v1/debug/info`
 
 Get useful node info such as its peer id, address, and SPR.
 
 Example:
-
 ```bash
-curl -vvv "127.0.0.1:8080/api/codex/v1/info"
+curl 127.0.0.1:8080/api/codex/v1/info
 ```
-
