@@ -61,7 +61,7 @@ const config = {
             label: 'Guides',
           },
           {
-            href: 'https://discord.gg/2NXGrsqmDq',
+            href: 'https://discord.gg/codex-storage',
             label: 'Discord',
           },
           {
@@ -76,7 +76,7 @@ const config = {
         ],
       },
       footer: {
-        copyright: 'Codex @2023<br/>All Rights Reserved.',
+        copyright: 'Codex @2024<br/>All Rights Reserved.',
         links: [
           {
             items: [
@@ -85,7 +85,7 @@ const config = {
                 label: 'Twitter',
               },
               {
-                href: 'https://discord.gg/2NXGrsqmDq',
+                href: 'https://discord.gg/codex-storage',
                 label: 'Discord',
               },
               {
