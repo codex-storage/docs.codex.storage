@@ -1,0 +1,15 @@
+{
+    "timestamp": "2024-07-15T13:23:36Z",
+    "git": {
+        "commit": "8686e88dc22cbd6741d33617a1bbb86fbf8c1c13",
+        "branch": "origin/deploy-with-caddy-git",
+        "url": "git@github.com:codex-storage/docs.codex.storage.git"
+    },
+    "build": {
+        "id": "31",
+        "number": "31",
+        "name": "website/dev-docs.codex.storage",
+        "slave": "linux-01",
+        "url": "https://ci.infra.status.im/job/website/job/dev-docs.codex.storage/31/"
+    }
+}
